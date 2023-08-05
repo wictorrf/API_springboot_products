@@ -33,5 +33,15 @@ public class ProductServices {
         return productRepositorie.save(productModel);
     }
 
-
+    @Transactional
+    public ProductModel update(UUID id, ProductRecordDto productRecordDto){
+        Optional<ProductModel> product = this.productRepositorie.findById(id);
+        if(product.isPresent()){
+            var productModel = product.get();
+            BeanUtils.copyProperties(productRecordDto, productModel);
+            return productRepositorie.save(productModel);
+        }else {
+            throw new RuntimeException("Produto não encontrado! id: " + id);
+        }
+    }
 }

@@ -43,17 +43,17 @@ public class ProductController {
         }
     }
 
-    // @PutMapping("/product/{id}")
-    // public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
-    // @RequestBody @Valid ProductRecordDto productRecordDto){
-    //     Optional<ProductModel> product0 = productRepositorie.findById(id);
-    //     if(product0.isEmpty()){
-    //          return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
-    //     }
-    //     var productModel = product0.get();
-    //     BeanUtils.copyProperties(productRecordDto, productModel);
-    //     return ResponseEntity.status(HttpStatus.OK).body(productRepositorie.save(productModel));
-    // }
+    @PutMapping("/product/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
+        @RequestBody @Valid ProductRecordDto productRecordDto) {
+    try {
+        ProductModel productModel = this.productServices.update(id, productRecordDto);
+        return ResponseEntity.status(HttpStatus.OK).body(productModel);
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+}
+
 
     // @DeleteMapping("/product/{id}")
     // public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id){
