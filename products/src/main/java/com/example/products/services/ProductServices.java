@@ -1,5 +1,6 @@
 package com.example.products.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import java.util.UUID;
@@ -25,6 +26,10 @@ public class ProductServices {
             "Produto não encontrado! id: " + id
         ));
     }
+    
+    public List<ProductModel> findAll(){
+        return productRepositorie.findAll();
+    }
 
     @Transactional
     public ProductModel create(ProductRecordDto productRecordDto){
@@ -40,6 +45,16 @@ public class ProductServices {
             var productModel = product.get();
             BeanUtils.copyProperties(productRecordDto, productModel);
             return productRepositorie.save(productModel);
+        }else {
+            throw new RuntimeException("Produto não encontrado! id: " + id);
+        }
+    }
+
+    public void delete(UUID id){
+        Optional<ProductModel> product = productRepositorie.findById(id);
+        if(product.isPresent()){
+            var productModel = product.get();
+            productRepositorie.delete(productModel);
         }else {
             throw new RuntimeException("Produto não encontrado! id: " + id);
         }
