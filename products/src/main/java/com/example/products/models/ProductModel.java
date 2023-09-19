@@ -20,6 +20,17 @@ public class ProductModel {
     private UUID idProduct;
     private String name;
     private BigDecimal value;
+
+    public ProductModel() {
+        
+    }
+
+    public ProductModel(UUID idProduct, String name, BigDecimal value) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.value = value;
+    }
+
     
     public UUID getIdProduct() {
         return idProduct;
@@ -38,5 +49,5 @@ public class ProductModel {
     }
     public void setValue(BigDecimal value) {
         this.value = value;
-    }
+    }    
 }
