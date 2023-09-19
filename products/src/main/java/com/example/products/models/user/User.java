@@ -19,7 +19,7 @@ public class User implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String login;
 
@@ -27,11 +27,11 @@ public class User implements UserDetails {
 
     private UserRole role;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,11 +62,36 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(int id, String login, String password, UserRole role) {
+    public User(Long id, String login, String password, UserRole role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
     @Override
@@ -102,7 +127,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
- 
 }
